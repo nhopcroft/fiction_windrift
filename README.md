@@ -1,0 +1,91 @@
+# Windrift
+
+A JavaScript framework for writing mutable narratives, in major version 2.
+
+![Integration tests](https://github.com/lizadaly/windrift/actions/workflows/cypress.yml/badge.svg)
+
+Windrift has been used to author interactive hypertext stories including the award-winning [Harmonia](https://lizadaly.com/pages/harmonia/) in 2017, [Stone
+Harbor](https://stoneharborgame.com/) in 2016, and [The Ballroom](https://lizadaly.com/projects/the-ballroom/) in 2019, all by Liza Daly. It was
+also used by Enrique Henestroza Anguiano to write <a
+href="http://springthing.net/2018/play_online/TheImposter/index.html">The
+Imposter</a> (2018) and José Carlos Dias to produce the [Portuguese translation of Stone Harbor](https://stoneharborgame.com/pt/) in 2021.
+
+## Documentation
+
+The [official manual](https://windrift.app/manual) is continuously published as features are added and is itself a Windrift story. The manual is the best way to quickly get an overview of Windrift v2. Corrections and requests for coverage are gratefully accepted.
+
+## Example stories
+
+Stories demonstrating use of Windrift 2 from the basic to the advanced are available as part of the [official manual](https://windrift.app/manual) , as well as in the [Windrift Playground](https://playground.windrift.app/). Source code is available for all example stories.
+
+## Quick start
+
+### Dependencies
+
+To ensure you're using a fully-compatible version of Node, use [Node Version Manager](https://github.com/nvm-sh/nvm). Follow its installation process for your platform and then run:
+
+```
+nvm install 14
+nvm use 14
+```
+
+Then to install Windrift:
+
+```
+npm install
+```
+
+(Windrift comes ready to deploy using Vercel, which requires a maximum Node version of 14. If you're deploying elsewhere you could use a Node version greater than 14.)
+
+### To start a new story
+
+```
+npm run new <story-id>
+```
+
+The story identifier must be a single string, like "west-of-house" or "colossal-cave." See the [manual](https://windrift.app/manual) for details.
+
+### To run the local development environment
+
+```
+npm run dev
+```
+
+Other commands, including deployment options, are described in the <a href="https://windrift.app/manual">Windrift manual</a>.
+
+## About version 2
+
+This is a complete rewrite of Windrift, now based on [NextJS](https://nextjs.org/) and written in [TypeScript](https://www.typescriptlang.org/).
+
+Windrift no longer separates the core library from the web framework, which was previously available as the `windrift-starter` repo. Keeping windrift-starter and windrift core separate made for a confusing installation and update process, and neither was useful without the other.
+
+Windrift 2 unifies them into a single NextJS application, capable of hosting multiple stories. Authors can take advantage of any affordances offered by NextJS, including the free deployment options via [Vercel](https://vercel.com).
+
+Because the core Windrift code is bundled with each story repository, authors can fully modify or alter any fundamental behavior of the library.
+
+The [v1 branch](https://github.com/lizadaly/windrift/tree/v1) is no longer receiving updates.
+
+## About multiplayer
+
+Multiplayer support requires use of an external Postgres database, the [Prisma database client](https://www.prisma.io/), and a hosting environment that can support a Node backend. The simplest configuration is using Vercel and a third-party accessible database configured with [PgBouncer](https://www.pgbouncer.org/). See the [Vercel documentation on databases](https://vercel.com/docs/concepts/solutions/databases).
+
+For local development, configure a `.env` file with two database connection strings to whatever database you will use for local development. This can either be a Postgres instance running on your machine, or a dev instance in a cloud provider. E.g.:
+
+```
+DATABASE_URL="postgresql://dev:PASSWORD@HOSTNAME:25060/dev?schema=public"
+SHADOW_DATABASE_URL="postgresql://dev-shadow:PASSWORD@HOSTNAME:25060/dev-shadow?schema=public"
+```
+
+(The [shadow database](https://www.prisma.io/docs/concepts/components/prisma-migrate/shadow-database) is a Prisma concept used for development only.)
+
+In production environments, supply `DATABASE_URL` to the appropriate instance using environment variables accessible to your Node environment.
+
+### Setup commands
+
+When first setting up your database, run:
+
+```
+npm run db
+```
+
+which will execute a `prisma db push` command to create the database tables in your configured dev database and create the local client code.
