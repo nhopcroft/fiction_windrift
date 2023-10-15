@@ -1,0 +1,165 @@
+@use 'sass:math';
+@use 'sass:color';
+
+@use '/public/styles/sizing';
+@use '/public/styles/colors' with (
+    $cool: rgb(99, 106, 126)
+);
+
+@use '/public/styles/fonts' with (
+    $header: 'Poiret One',
+    $body: 'PT Sans'
+);
+
+@use '/public/styles/header' with (
+    $background-color: colors.$cool,
+);
+
+@use '/public/styles/main';
+
+@import url("https://fonts.googleapis.com/css2?family=Poiret+One&family=PT+Sans&display=block");
+
+$left-right-width: 1fr;
+
+// Overrides and additions to the default grid
+
+.header {
+
+    nav {
+        // Add an extra column for the share button
+        grid-template-columns: 3fr 1fr 1fr;
+
+        .player {
+            display: inline-block;
+            font-size: 1rem;
+            justify-self: right;
+            margin-right: 10px;
+            align-self: center;
+        }
+
+        .share {
+            display: inline-block;
+            align-self: center;
+
+        }
+        h1 {
+            padding-left: math.div(sizing.$gutter, 4);
+        }
+    }
+}
+
+.main {
+
+    // Widen the right column to show the presence/log list
+    grid-template-columns: $left-right-width 3fr 0;
+    p {
+        font-size: 1.25em;
+    }
+    .story {
+        padding: 0 math.div(sizing.$gutter, 4) 0 math.div(sizing.$gutter, 4);
+
+        aside {
+            background: color.scale(colors.$cool, $lightness: 75%);
+            padding: 1rem;
+            p {
+
+
+                line-height: 1.75em;
+            }
+        }
+    }
+    button {
+        display: inline-block;
+        margin-right: sizing.$gutter;
+        background: colors.$button;
+        color: colors.$very-light;
+        border: 0;
+        box-shadow: none;
+        border-radius: 0;
+        font-size: 1rem;
+        text-transform: uppercase;
+        padding: 10px;
+    }
+
+    button:disabled {
+        background: colors.$disabled;
+    }
+
+    input {
+        display: inline-block;
+        margin-right: sizing.$gutter;
+        border: 1px solid colors.$cool;
+        box-shadow: none;
+        border-radius: 0;
+        font-size: 1rem;
+        text-transform: uppercase;
+        padding: 10px;
+    }
+    input[type=submit] {
+
+        background: colors.$cool;
+        color: colors.$contrast;
+        border: 0;
+        box-shadow: none;
+        border-radius: 0;
+        font-size: 1rem;
+        text-transform: uppercase;
+        padding: 10px;
+    }
+    h1, h2, h3, h4, h5 {
+        font-family: fonts.$header;
+    }
+
+}
+
+.left {
+    padding: 0 0 0 math.div(sizing.$gutter, 4);
+
+
+    p {
+        font-size: 1em;
+    }
+    h2 {
+        text-align: center;
+    }
+    .alcove {
+        background-image: url('/stories/cloaks-of-darkness/images/alcove.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        width: 100%;
+        height: 100%;
+    }
+    .playerBlock {
+        width: 100%;
+    }
+    .imageBlock {
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: bottom center;
+        min-height: 200px;
+    }
+    .raccoon {
+        background-image: url('/stories/cloaks-of-darkness/images/raccoon.png');
+    }
+    .snake {
+        background-image: url('/stories/cloaks-of-darkness/images/snake.png');
+    }
+    .watch {
+        display: grid;
+        grid-template-columns: 50px 1fr;
+        column-gap: 20px;
+    }
+    .icon {
+        width: 50px;
+        height: 50px;
+    }
+    .active {
+        opacity: 1;
+    }
+    .inactive {
+        opacity: .25;
+    }
+}
+.right {
+    display: none;
+}

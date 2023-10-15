@@ -1,0 +1,58 @@
+@use 'sass:color';
+
+@use '../colors';
+@use '../sizing';
+@use '../fonts';
+
+.clipboard {
+    width: 350px;
+    height: 50px;
+    border: none;
+    cursor: pointer;
+    background: colors.$disabled;
+    color: colors.$contrast;
+    padding: 5px;
+    display: flex;
+    font-family: fonts.$header;
+    font-size: 1rem;
+    align-items: center;
+    justify-content: center;
+
+
+    span {
+        display: inline-block;
+        margin-right: 20px;
+    }
+    img {
+        fill: colors.$cool;
+        stroke: colors.$cool;
+    }
+    &.offline {
+        animation: pulse 2s;
+        animation-iteration-count: infinite;
+        background: colors.$warm;
+        border: 2px solid colors.$very-light;
+
+    }
+    &:hover {
+        background: color.scale(colors.$warm, $lightness: 20%);
+        animation: none;
+
+    }
+    &:active {
+        background: colors.$button;
+    }
+    @keyframes pulse {
+        0% {
+            border-color: rgba(255, 255, 255, 0);
+        }
+
+        50% {
+            border-color: rgba(255, 255, 255, 1);
+        }
+        100% {
+            border-color: rgba(255, 255, 255, 0);
+
+        }
+    }
+}
